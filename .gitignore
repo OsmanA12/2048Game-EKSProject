@@ -12,3 +12,5 @@ terraform/mainsecret.tf
 .env
 *.terraform
 .terraform/.terraform
+*.pem
+*.key
