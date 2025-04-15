@@ -7,16 +7,17 @@ spec:
   project: default
 
   source:
-    repoURL:
-    targetRevision: 
-    path:
+    repoURL: https://github.com/OsmanA12/2048Game-EKSProject.git
+    targetRevision: HEAD
+    path: manifests
 
   destination:
-    server:
-    namespace:
+    server: 'https://kubernetes.default.svc'
+    namespace: apps
 
   syncPolicy:
     automated:
       prune: true
       selfheal: true
     syncOptions:
+    - CreateNamespace=true
