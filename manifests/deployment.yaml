@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+   name: 2048-deployment
+   labels:
+      app: 2048-eks
+spec:
+   replicas: 3
+   selector:
+     matchLabels: 
+      app: 2048-eks
+   template:
+     metadata: 
+       labels:
+         app: 2048-eks
+     spec: 
+       containers:
+       - name: 2048-eks
+         image: 585768150963.dkr.ecr.eu-west-2.amazonaws.com/2048-eks:latest
+         imagePullPolicy: Always 
+         ports:
+          - containerPort: 3000

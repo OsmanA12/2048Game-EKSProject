@@ -1,0 +1,14 @@
+.sass-cache/
+.terraform/
+*.tfstate
+*.tfstate.*
+*lock.hcl
+*.exe
+*.txt
+.terraform/
+terraform/errored.tfstate
+terraform.tfstate
+terraform/mainsecret.tf
+.env
+*.terraform
+.terraform/.terraform
