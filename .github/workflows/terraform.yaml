@@ -71,8 +71,6 @@ jobs:
   
      - name: applying our terraform
        working-directory: ./terraform
-       env:
-          TF_VAR_image_id: ${{ secrets.IMAGE_ID }}
        run: 
          terraform apply -auto-approve
 
