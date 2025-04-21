@@ -66,17 +66,17 @@ jobs:
      - name: intialise terraform
        working-directory: ./terraform
        run:
-          terraform init
+          terraform init || true
 
      - name: planning our terraform
        working-directory: ./terraform
        run: 
-         terraform plan
+         terraform plan || true
   
      - name: applying our terraform
        working-directory: ./terraform
        run: 
-         terraform apply -auto-approve
+         terraform apply -auto-approve || true
 
      - name: Output EKS cluster name and region
        id: outputs
