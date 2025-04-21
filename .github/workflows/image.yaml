@@ -20,7 +20,7 @@ jobs:
         run: |
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
           docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
-          docker build -t 2048-game .
-          docker tag 2048-game ${{ secrets.ECR_REGISTRY }}/2048-game
-          docker push ${{ secrets.ECR_REGISTRY }}/2048-game
+          docker build -t 2048-eks .
+          docker tag 2048-eks ${{ secrets.ECR_REGISTRY }}/2048-eks:latest
+          docker push ${{ secrets.ECR_REGISTRY }}/2048-eks:latest
 
