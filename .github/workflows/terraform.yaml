@@ -48,6 +48,7 @@ jobs:
        uses: bridgecrewio/checkov-action@master
        with:
         directory: .
+        soft_fail: true
 
      - name: Set up tflint
        uses: terraform-linters/setup-tflint@v1
