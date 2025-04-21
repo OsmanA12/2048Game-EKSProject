@@ -3,10 +3,10 @@ name: Terraform CICD workflow
 on: [workflow_dispatch]
 
 jobs:
-  terraform:
-     runs-on: ubuntu-latest
-     permissions:
-      contents: read
+ terraform:
+    runs-on: ubuntu-latest
+    permissions:
+     contents: read
 
      steps:
      - name: checkout code
@@ -76,10 +76,10 @@ jobs:
      - name: applying our terraform
        working-directory: ./terraform
        run: 
-         terraform apply -auto-approve || true
+         terraform apply -auto-approve
          echo "Ignore error - Kubeconfig will be updated under the created cluster" 
-      continue-on-error: true
-
+       continue-on-error: true
+    
      - name: Update kubeconfig for EKS access
        run: |
         aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name eks-lab
