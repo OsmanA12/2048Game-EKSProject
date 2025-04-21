@@ -66,12 +66,12 @@ jobs:
      - name: intialise terraform
        working-directory: ./terraform
        run:
-          terraform init || true
+          terraform init 
 
      - name: planning our terraform
        working-directory: ./terraform
        run: 
-         terraform plan || true
+         terraform plan 
   
      - name: applying our terraform
        working-directory: ./terraform

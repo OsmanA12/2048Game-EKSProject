@@ -35,10 +35,10 @@ jobs:
        - name: intialise provider
          working-directory: ./terraform
          run: 
-          terraform init || true
+          terraform init
 
 
        - name: terraform destroy
          working-directory: ./terraform
          run: 
-          terraform destroy --auto-approve || true
+          terraform destroy --auto-approve
