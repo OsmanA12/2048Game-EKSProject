@@ -59,9 +59,4 @@ jobs:
          echo "Ignore error - Kubeconfig will be updated under the created cluster" 
        continue-on-error: true
     
-     - name: Update kubeconfig for EKS access
-       run: |
-        aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name eks-lab
-   
-     - name: Deploy Helm Charts
-       run: terraform apply -auto-approve
+    
