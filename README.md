@@ -2,6 +2,8 @@
 
 This project deploys the classic [2048 game](https://play2048.co/) to an **Amazon EKS (Elastic Kubernetes Service)** cluster using **Terraform** for infrastructure provisioning and **GitHub Actions** for CI/CD automation. Docker images are built and pushed to **Amazon ECR (Elastic Container Registry)**.
 
+<img width="747" alt="Screenshot 2025-04-21 at 22 59 31" src="https://github.com/user-attachments/assets/a5263d16-1c63-4dc2-9d31-0cec03349424" />
+
 ---
 
 ## 🧱 Tech Stack
@@ -121,7 +123,12 @@ terraform apply -auto-approve
 ## 📷 Screenrecording of game
 
 
-https://github.com/user-attachments/assets/7cd80cef-5c94-44ba-88ed-f688a1f581ce
+
+https://github.com/user-attachments/assets/c456b136-70ec-410e-84ff-ce766ed35a01
+
+
+<img width="1440" alt="Screenshot 2025-04-15 at 01 02 50" src="https://github.com/user-attachments/assets/1e1ee116-76c8-4aaf-9708-92ba8d2b631e" />
+
 
 
 
