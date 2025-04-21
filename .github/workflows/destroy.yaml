@@ -35,7 +35,7 @@ jobs:
        - name: intialise provider
          working-directory: ./terraform
          run: 
-          terraform init
+          terraform init || true
 
 
        - name: terraform destroy
