@@ -1,0 +1,44 @@
+name: Terraform destroy pipeline
+
+
+on: [workflow_dispatch]
+
+
+jobs:
+   terraform:    
+       runs-on: ubuntu-latest
+       permissions:
+           contents: read
+
+
+       steps:
+       - name: checkout code
+         uses: actions/checkout@v2
+
+
+        # AWS Credientials
+       - name: AWS Log in
+         uses: aws-actions/configure-aws-credentials@v2
+         with:
+           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+           aws-region: ${{ secrets.AWS_REGION }}
+        
+        #Set up terraform   
+       - name: Set up Terraform
+         uses: hashicorp/setup-terraform@v1
+         with:
+          terraform_version: 1.5.0
+
+
+       # Terraform
+       - name: intialise provider
+         working-directory: ./terraform
+         run: 
+          terraform init
+
+
+       - name: terraform destroy
+         working-directory: ./terraform
+         run: 
+          terraform destroy --auto-approve

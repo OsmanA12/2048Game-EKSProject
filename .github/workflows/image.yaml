@@ -1,0 +1,26 @@
+name: Docker image CICD workflow
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+      runs-on: ubuntu-latest
+      steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: AWS Log in
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Push docker image to ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+          docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+          docker build -t 2048-game .
+          docker tag threatcomposer-app ${{ secrets.ECR_REGISTRY }}/2048-game
+          docker push ${{ secrets.ECR_REGISTRY }}/2048-game
+

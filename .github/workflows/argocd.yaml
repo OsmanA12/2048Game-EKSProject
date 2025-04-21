@@ -1,0 +1,39 @@
+name: ArgoCD dispatch
+
+on: [workflow_dispatch]
+
+jobs:
+ terraform:
+     runs-on: ubuntu-latest
+     permissions:
+      contents: read
+
+     steps:
+     - name: checkout code
+       uses: actions/checkout@v2
+
+    # AWS Credientials
+     - name: AWS Log in
+       uses: aws-actions/configure-aws-credentials@v2
+       with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+       
+    # Set up kubectl
+     - name: Set up kubectl
+       uses: azure/setup-kubectl@v3
+       with:
+        version: v1.29.0
+
+  # Create cert-manager certificate issuer
+     - name: cert-manager 
+       working-directory: ./cert-manager
+       run:
+        kubectl apply -f issuer.yaml
+
+  # Deply Argocd
+     - name: argocd
+       working-directory: ./argo-cd
+       run:
+        kubectl apply -f apps-argo.yaml

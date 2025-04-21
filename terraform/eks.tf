@@ -22,5 +22,6 @@ module "eks" {
     default = {}
   }
 
+
   tags = local.tags
 }

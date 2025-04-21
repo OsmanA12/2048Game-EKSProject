@@ -1,0 +1,90 @@
+name: Terraform CICD workflow
+
+on: [workflow_dispatch]
+
+jobs:
+  terraform:
+     runs-on: ubuntu-latest
+     permissions:
+      contents: read
+
+     steps:
+     - name: checkout code
+       uses: actions/checkout@v2
+
+  # AWS Credientials
+     - name: AWS Log in
+       uses: aws-actions/configure-aws-credentials@v2
+       with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: ${{ secrets.AWS_REGION }}
+
+    # Set up terraform   
+     - name: Set up Terraform
+       uses: hashicorp/setup-terraform@v1
+       with:
+           terraform_version: 1.5.0
+
+    # Set up kubectl
+     - name: Set up kubectl
+       uses: azure/setup-kubectl@v3
+       with:
+        version: v1.29.0
+
+     # Set up Helm
+     - name: Set up Helm
+       uses: azure/setup-helm@v3
+       with:
+        version: v3.13.0
+
+     - name: Trivy Scan
+       uses: aquasecurity/trivy-action@master
+       with:
+        scan-type: fs
+        scan-ref: .
+  
+     - name: Checkov Scan
+       uses: bridgecrewio/checkov-action@master
+       with:
+        directory: .
+
+     - name: Set up tflint
+       uses: terraform-linters/setup-tflint@v1
+      
+     - name: Set up tfsec
+       uses: aquasecurity/tfsec-action@v1.0.0
+       with:
+        additional_args: --soft-fail --format json
+      
+      
+  # Terraform
+     - name: intialise terraform
+       working-directory: ./terraform
+       run:
+          terraform init
+
+     - name: planning our terraform
+       working-directory: ./terraform
+       run: 
+         terraform plan
+  
+     - name: applying our terraform
+       working-directory: ./terraform
+       env:
+          TF_VAR_image_id: ${{ secrets.IMAGE_ID }}
+       run: 
+         terraform apply -auto-approve
+
+     - name: Output EKS cluster name and region
+       id: outputs
+       run: |
+           echo "EKS_CLUSTER_NAME=$(terraform output -raw eks_cluster_name)" >> $GITHUB_ENV
+           echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV
+   
+     - name: Update kubeconfig for EKS access
+       run: |
+        aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name eks-lab
+   
+     - name: Deploy Helm Charts
+       run: terraform apply -auto-approve
