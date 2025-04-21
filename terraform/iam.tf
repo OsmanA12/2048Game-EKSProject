@@ -15,8 +15,6 @@ resource "aws_eks_access_policy_association" "example" {
     type       = "namespace"
     namespaces = ["example-namespace"]
   }
-
-  depends_on = [ aws_eks_access_entry.example ]
 }
 
 resource "aws_eks_access_policy_association" "example1" {
@@ -29,6 +27,4 @@ resource "aws_eks_access_policy_association" "example1" {
     type       = "namespace"
     namespaces = ["example-namespace"]
   }
-
-  depends_on = [ aws_eks_access_entry.example ]
 }
