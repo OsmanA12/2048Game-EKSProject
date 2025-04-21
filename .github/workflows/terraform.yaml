@@ -8,7 +8,7 @@ jobs:
     permissions:
      contents: read
 
-     steps:
+    steps:
      - name: checkout code
        uses: actions/checkout@v2
 
