@@ -77,12 +77,10 @@ jobs:
        working-directory: ./terraform
        run: 
          terraform apply -auto-approve || true
+         echo "Ignore error - Kubeconfig will be updated under the created cluster" 
+      continue-on-error: true
 
-     - name: Output EKS cluster name and region
-       id: outputs
-       run: |
-           echo "EKS_CLUSTER_NAME=$(terraform output -raw eks_cluster_name)" >> $GITHUB_ENV
-           echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV
+     
    
      - name: Update kubeconfig for EKS access
        run: |
