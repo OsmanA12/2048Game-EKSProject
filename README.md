@@ -140,7 +140,7 @@ Feel free to reach out if you have any questions or want to collaborate!
 
 ---
 
-
+## To test the locally,
 _Ensure nodejs is installed first_
 
 ```
